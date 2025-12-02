@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Sensortechnik – Lernmodul (2. Lehrjahr EBT)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.5;
+            color: #1f2933;
+            background: #f5f7fa;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        header {
+            background: #111827;
+            color: #f9fafb;
+            padding: 1.5rem 1rem;
+        }
+
+        header h1 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1.6rem;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        @media (min-width: 900px) {
+            main {
+                grid-template-columns: 260px minmax(0, 1fr);
+            }
+        }
+
+        nav {
+            background: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+            position: sticky;
+            top: 1rem;
+            align-self: flex-start;
+        }
+
+        nav h2 {
+            margin-top: 0;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.35rem;
+        }
+
+        nav a {
+            display: block;
+            font-size: 0.95rem;
+            padding: 0.35rem 0;
+            color: #111827;
+            text-decoration: none;
+        }
+
+        /* Tabs */
+        .tab-link {
+            border-radius: 0.4rem;
+            padding-left: 0.6rem;
+        }
+
+        .tab-link:hover {
+            background: #e5f2ff;
+            text-decoration: none;
+        }
+
+        .tab-link.active {
+            background: #1d4ed8;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .tab-section {
+            display: none;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        section {
+            background: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+        }
+
+        section h2 {
+            margin-top: 0;
+            font-size: 1.4rem;
+        }
+
+        section h3 {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        p {
+            margin: 0.3rem 0 0.4rem 0;
+            font-size: 0.97rem;
+        }
+
+        ul {
+            margin: 0.25rem 0 0.5rem 1.2rem;
+            padding: 0;
+            font-size: 0.95rem;
+        }
+
+        li {
+            margin-bottom: 0.15rem;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 999px;
+            background: #e5f2ff;
+            color: #1d4ed8;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-box {
+            border-left: 4px solid #2563eb;
+            background: #eff6ff;
+            padding: 0.5rem 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .definition {
+            border-left: 4px solid #059669;
+            background: #ecfdf3;
+            padding: 0.4rem 0.75rem;
+            margin: 0.35rem 0;
+            border-radius: 0.45rem;
+            font-size: 0.9rem;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 0.5rem 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 0.4rem 0.5rem;
+            text-align: left;
+        }
+
+        th {
+            background: #f3f4f6;
+        }
+
+        .quiz-block {
+            margin-top: 0.6rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #d1d5db;
+            font-size: 0.93rem;
+        }
+
+        details {
+            margin-top: 0.4rem;
+            background: #f9fafb;
+            border-radius: 0.5rem;
+            padding: 0.4rem 0.6rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        details summary {
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.85rem;
+            background: #f3f4f6;
+            padding: 0 0.25rem;
+            border-radius: 0.25rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 0.75rem;
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+        /* Bild-Beispiele 2-/3-/4-Draht und weitere */
+        .image-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.6rem;
+        }
+
+        .image-row figure {
+            margin: 0;
+            max-width: 100%;
+            flex: 1 1 220px;
+        }
+
+        .image-row img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+        }
+
+        .image-row figcaption {
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Sensortechnik in der Automatisierung</h1>
+    <p>Elektroniker für Betriebstechnik – 2. Lehrjahr · Lernmodul HTML</p>
+</header>
+
+<main>
+    <nav>
+        <h2>Inhalte</h2>
+        <a href="#einheit1" class="tab-link" data-target="einheit1">1. 2-/3-Draht &amp; NPN/PNP</a>
+        <a href="#einheit2" class="tab-link" data-target="einheit2">2. Induktive &amp; kapazitive Sensoren</a>
+        <a href="#einheit3" class="tab-link" data-target="einheit3">3. Optische Sensoren</a>
+        <a href="#einheit4" class="tab-link" data-target="einheit4">4. Ultraschall &amp; RFID</a>
+        <a href="#einheit5" class="tab-link" data-target="einheit5">5. Magnetische &amp; magnetoresistive Sensoren</a>
+        <a href="#abschluss" class="tab-link" data-target="abschluss">Abschluss</a>
+    </nav>
+
+    <div class="content">
+
+        <!-- EINHEIT 1 -->
+        <section id="einheit1" class="tab-section">
+            <span class="badge">Einheit 1</span>
+            <h2>2- und 3-Draht-Sensoren, NPN- und PNP-Ausgänge</h2>
+
+            <p>
+                Näherungssensoren werden in der Steuerungstechnik meist an 24&nbsp;V&nbsp;DC betrieben.
+                Für den Anschluss an SPS-Eingänge oder Relais werden verschiedene Anschlussarten verwendet.
+            </p>
+
+            <h3>2-Draht-Sensoren</h3>
+            <p>
+                2-Draht-Sensoren werden wie ein Schalter in Reihe zur Last geschaltet.
+                Sie haben nur zwei Anschlüsse und führen im eingeschalteten Zustand den Laststrom.
+            </p>
+            <ul>
+                <li>nur <strong>zwei Leitungen</strong> (Versorgung und Last in einem Pfad)</li>
+                <li>immer ein kleiner Ruhestrom &rarr; auch im ausgeschalteten Zustand fließt ein kleiner Strom</li>
+                <li>werden häufig in einfachen Schaltungen oder als Ersatz für mechanische Endschalter genutzt</li>
+            </ul>
+
+            <h3>3-Draht-Sensoren</h3>
+            <p>
+                3-Draht-Sensoren besitzen getrennte Anschlüsse für Versorgung (<code>+24&nbsp;V</code>, <code>0&nbsp;V</code>)
+                und einen Schaltausgang. Das ist heute Standard in der Automatisierungstechnik.
+            </p>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Funktion</th>
+                        <th>Typische Farbe</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>+24&nbsp;V (L+)</td>
+                        <td>braun</td>
+                        <td>Versorgungsspannung des Sensors</td>
+                    </tr>
+                    <tr>
+                        <td>0&nbsp;V (M)</td>
+                        <td>blau</td>
+                        <td>Bezugspotential / Rückleiter</td>
+                    </tr>
+                    <tr>
+                        <td>Ausgang</td>
+                        <td>schwarz</td>
+                        <td>Schaltsignal des Sensors (NPN oder PNP)</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>NPN- und PNP-Ausgänge</h3>
+            <p>
+                Beim 3-Draht-Sensor ist der Ausgang als Transistor aufgebaut. Man unterscheidet:
+            </p>
+
+            <div class="definition">
+                <strong>PNP-Sensor (stromquellend):</strong>
+                Ausgang schaltet <strong>Plus</strong> auf den Eingang. Die Last bzw. der SPS-Eingang liegt am Minus (0&nbsp;V).
+            </div>
+            <div class="definition">
+                <strong>NPN-Sensor (stromsenkend):</strong>
+                Ausgang schaltet <strong>Minus</strong> (0&nbsp;V) auf den Eingang. Die Last bzw. der SPS-Eingang liegt an +24&nbsp;V.
+            </div>
+
+            <p>
+                In Europa sind PNP-Sensoren bei SPS-Anwendungen sehr weit verbreitet (Eingänge „gegen Minus schaltend“).
+                In manchen Ländern/Anlagen trifft man noch NPN-Sensoren an.
+            </p>
+
+            <div class="info-box">
+                <strong>Merksatz:</strong> PNP = „Plus schaltend“, NPN = „Minus schaltend“.  
+                Wichtig: <u>Sensor und SPS-Eingang müssen zueinander passen</u>.
+            </div>
+
+            <!-- Download-Material -->
+            <h3>Material zum Download</h3>
+            <p>Weitere Infos zu Symbolen und NPN/PNP-Technik:</p>
+            <ul>
+                <li><a href="Info_Sensorsymbole_V1_0.pdf" target="_blank" download>Info_Sensorsymbole_V1_0.pdf</a></li>
+                <li><a href="Infoteil Seite 184.pdf" target="_blank" download>Infoteil Seite 184.pdf</a></li>
+                <li><a href="NPN-PNP Sensoren.pdf" target="_blank" download>NPN-PNP Sensoren.pdf</a></li>
+            </ul>
+
+            <!-- Beispielbilder 2-, 3- und 4-Draht-Systeme -->
+            <h3>Beispiele für 2-, 3- und 4-Draht-Systeme</h3>
+            <p>
+                Die folgenden Schaltbilder zeigen typische Anschlussbeispiele aus der Praxis:
+            </p>
+            <div class="image-row">
+                <figure>
+                    <img src="zweidrahtsystem.png" alt="Zweidrahtsystem: PNP- oder NPN-Technik mit Öffner/Schließer">
+                    <figcaption>Zweidrahtsystem – z.&nbsp;B. PNP-Technik mit Schließer.</figcaption>
+                </figure>
+                <figure>
+                    <img src="dreidrahtsystem.png" alt="Dreidrahtsystem: NPN- oder PNP-Technik mit Schließer">
+                    <figcaption>Dreidrahtsystem – typischer NPN- oder PNP-Schließer.</figcaption>
+                </figure>
+                <figure>
+                    <img src="vierdrahtsystem.png" alt="Vierdrahtsystem: PNP oder NPN mit Öffner und Schließer">
+                    <figcaption>Vierdrahtsystem – Sensor mit separatem Öffner und Schließer.</figcaption>
+                </figure>
+            </div>
+
+            <div class="quiz-block">
+                <strong>Selbstcheck</strong>
+                <details>
+                    <summary>Frage 1: Woran erkennst du einen 3-Draht-Sensor im Schaltplan?</summary>
+                    <p>
+                        Er hat drei Anschlüsse (L+, M, Ausgang). Zusätzlich ist im Symbol oft ein Transistor (NPN/PNP)
+                        erkennbar. Die Versorgung ist vom Ausgang getrennt.
+                    </p>
+                </details>
+                <details>
+                    <summary>Frage 2: Warum sind 2-Draht-Sensoren nicht ideal für SPS-Eingänge?</summary>
+                    <p>
+                        Wegen des Ruhestroms können sie bei hochohmigen Eingängen zu Fehlauslösungen führen.
+                        Außerdem ist die Diagnose schwieriger und die Verdrahtung weniger flexibel.
+                    </p>
+                </details>
+            </div>
+        </section>
+
+        <!-- EINHEIT 2 -->
+        <section id="einheit2" class="tab-section">
+            <span class="badge">Einheit 2</span>
+            <h2>Induktive und kapazitive Sensoren · Schaltabstände</h2>
+
+            <h3>Induktive Näherungssensoren</h3>
+            <p>
+                Induktive Sensoren erfassen <strong>metallische Werkstoffe</strong> berührungslos.
+                Im Sensor wird ein hochfrequentes elektromagnetisches Feld erzeugt. Nähert sich ein Metallteil,
+                beeinflusst es dieses Feld und der Sensor schaltet.
+            </p>
+            <ul>
+                <li>erfasst nur Metalle (z.&nbsp;B. Stahl, Aluminium, Messing)</li>
+                <li>sehr robust, unempfindlich gegen Schmutz, Öl oder Wasser</li>
+                <li>typische Einsatzgebiete: Positionsabfrage von Zylindern, Endlagen von Maschinenachsen</li>
+            </ul>
+
+            <h3>Kapazitive Näherungssensoren</h3>
+            <p>
+                Kapazitive Sensoren arbeiten mit einem <strong>elektrischen Feld</strong>.
+                Die Frontfläche bildet einen Kondensator. Nähert sich ein Gegenstand, ändert sich die Kapazität
+                und der Sensor schaltet.
+            </p>
+            <ul>
+                <li>erfasst <strong>leitende und nichtleitende</strong> Materialien (Metall, Kunststoff, Holz, Flüssigkeiten, Pulver)</li>
+                <li>Empfindlichkeit oft einstellbar (z.&nbsp;B. Füllstand durch Behälterwand)</li>
+                <li>etwas empfindlicher gegenüber Feuchtigkeit, Verschmutzung und Umgebungseinflüssen</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Praxisbeispiel:</strong>  
+                Induktiv → Erkennung einer Zahnradstellung aus Stahl.  
+                Kapazitiv → Füllstandserkennung von Getreide oder Kunststoff-Pellets im Silo.
+            </div>
+
+            <h3>Wichtige Begriffe zu Schaltabständen</h3>
+
+            <p>Die folgenden Grafiken veranschaulichen Schaltabstand, Hysterese sowie Reduktionsfaktoren bei induktiven und kapazitiven Sensoren:</p>
+
+            <div class="image-row">
+                <figure>
+                    <img src="Schaltabstand.png" alt="Schaltabstand eines Näherungssensors">
+                    <figcaption>Schaltabstand und Hysterese in Abhängigkeit von der Position der Messplatte.</figcaption>
+                </figure>
+                <figure>
+                    <img src="Hysterese.png" alt="Hysterese Kennlinie">
+                    <figcaption>Hysterese – unterschiedliche Schaltpunkte bei Annäherung und Entfernung.</figcaption>
+                </figure>
+                <figure>
+                    <img src="Induktiv.png" alt="Aufbau induktiver Näherungssensor">
+                    <figcaption>Wirkprinzip eines induktiven Näherungssensors (Blöcke 1–5).</figcaption>
+                </figure>
+                <figure>
+                    <img src="Kapazitiv.png" alt="Aufbau kapazitiver Näherungssensor">
+                    <figcaption>Wirkprinzip eines kapazitiven Näherungssensors (Blöcke 1–5).</figcaption>
+                </figure>
+            </div>
+
+            <div class="image-row">
+                <figure>
+                    <img src="InduktivReduktionsfaktoren.png" alt="Reduktionsfaktoren Induktiv">
+                    <figcaption>Reduktionsfaktoren des Bemessungsschaltabstands für verschiedene Metalle (induktiv).</figcaption>
+                </figure>
+                <figure>
+                    <img src="KapazitivReduktionsfaktoren.png" alt="Reduktionsfaktoren Kapazitiv">
+                    <figcaption>Reduktionsfaktoren für verschiedene Materialien bei kapazitiven Sensoren.</figcaption>
+                </figure>
+                <figure>
+                    <img src="KapazitivInduktivEinbau.png" alt="Bündiger und nicht bündiger Einbau">
+                    <figcaption>Bündiger / nicht bündiger Einbau und Einfluss auf den Schaltabstand.</figcaption>
+                </figure>
+                <figure>
+                    <img src="KapazitivInduktivKennzeichen.png" alt="Kennzeichnung von Näherungssensoren">
+                    <figcaption>Kennzeichnung von Näherungssensoren nach Erfassungsart, Bauform und Ausgang.</figcaption>
+                </figure>
+            </div>
+
+            <!-- ERLÄUTERUNG DER WIRKPRINZIPIEN / BLOECKE -->
+            <h3>Wirkprinzip der induktiven Näherungssensoren (Blöcke 1–5)</h3>
+            <p>
+                Das Bild <em>Induktiv.png</em> zeigt den inneren Aufbau eines induktiven Näherungssensors in fünf Funktionsblöcken.
+                Jeder Block erfüllt eine eigene Aufgabe:
+            </p>
+            <ol>
+                <li>
+                    <strong>Block 1 – HF-Oszillator / Spule:</strong>
+                    An der aktiven Fläche des Sensors erzeugt ein Hochfrequenz-Oszillator ein elektromagnetisches Feld.
+                    Nähert sich ein metallisches Objekt, entstehen darin Wirbelströme, die das Feld dämpfen.
+                </li>
+                <li>
+                    <strong>Block 2 – Dämpfungs-/Feldanalyse:</strong>
+                    Diese Stufe misst, wie stark das Feld durch das Metall geschwächt wird.
+                    Je näher und größer das Metall, desto stärker ist die Dämpfung.
+                </li>
+                <li>
+                    <strong>Block 3 – Gleichrichter / Demodulator:</strong>
+                    Die hochfrequente Feldänderung wird in ein niederfrequentes, verwertbares Signal umgewandelt.
+                    Aus der Dämpfung des HF-Signals entsteht ein Messsignal, das die weitere Elektronik nutzen kann.
+                </li>
+                <li>
+                    <strong>Block 4 – Schwellwertschalter / Triggerstufe:</strong>
+                    Hier wird entschieden, ob das Objekt nah genug am Sensor ist.
+                    Überschreitet das Messsignal einen festen Schwellwert, schaltet der Sensor ein.
+                    Beim Entfernen schaltet er erst bei einem etwas kleineren Signal wieder aus – das ist die
+                    <em>Hysterese</em> (Flattern wird verhindert).
+                </li>
+                <li>
+                    <strong>Block 5 – Ausgangsstufe (NPN/PNP):</strong>
+                    Die Triggerstufe steuert den Ausgangstransistor an.
+                    Je nach Typ liefert der Sensor ein PNP- oder NPN-Signal an die SPS bzw. das Relais.
+                </li>
+            </ol>
+
+            <h3>Wirkprinzip der kapazitiven Näherungssensoren (Blöcke 1–5)</h3>
+            <p>
+                Das Bild <em>Kapazitiv.png</em> zeigt den Aufbau eines kapazitiven Näherungssensors.
+                Der prinzipielle Signalweg ist ähnlich wie beim induktiven Sensor, allerdings mit elektrischem Feld:
+            </p>
+            <ol>
+                <li>
+                    <strong>Block 1 – Sensorelektrode / Kondensatorfläche:</strong>
+                    Die aktive Sensorfläche bildet gemeinsam mit der Umgebung bzw. dem Zielobjekt einen Kondensator.
+                    Nähert sich ein Objekt, ändert sich die Kapazität – stark z.&nbsp;B. bei Wasser oder Metallen,
+                    schwächer bei Kunststoffen.
+                </li>
+                <li>
+                    <strong>Block 2 – HF-Anregung / Kapazitätsmessung:</strong>
+                    Eine Wechselspannung regt den Kondensator an. Änderungen der Kapazität führen zu Änderungen
+                    im HF-Signal und können ausgewertet werden.
+                </li>
+                <li>
+                    <strong>Block 3 – Gleichrichter / Demodulator:</strong>
+                    Das Wechselspannungssignal wird gleichgerichtet und geglättet, sodass ein zur Kapazität
+                    proportionaler Gleichspannungswert entsteht.
+                </li>
+                <li>
+                    <strong>Block 4 – Schwellwertschalter mit Hysterese:</strong>
+                    Der Gleichspannungswert wird mit einem einstellbaren Schwellwert verglichen.
+                    Wird er überschritten, schaltet der Sensor ein. Durch die Hysterese (siehe <em>Hysterese.png</em>)
+                    gibt es unterschiedliche Schaltpunkte beim Annähern und Entfernen des Objekts.
+                </li>
+                <li>
+                    <strong>Block 5 – Ausgangsstufe:</strong>
+                    Wie beim induktiven Sensor sorgt die Endstufe für ein binäres Ausgangssignal
+                    (PNP, NPN oder Relaiskontakt), sodass der Sensor direkt an eine SPS angeschlossen werden kann.
+                </li>
+            </ol>
+
+            <h3>Schaltabstand, Reduktionsfaktoren und Einbau</h3>
+            <p>
+                Im Bild <em>Schaltabstand.png</em> sind <strong>tatsächlicher Schaltabstand</strong> <code>Sr</code>,
+                <strong>Nennschaltabstand</strong> <code>Sn</code> und <strong>gesicherter Schaltabstand</strong> <code>Sa</code>
+                dargestellt. Die Hysterese <code>H</code> sorgt dafür, dass der Sensor nicht ständig ein- und ausschaltet,
+                wenn das Objekt leicht pendelt oder vibriert.
+            </p>
+            <p>
+                Die Tabellen in den Bildern <em>InduktivReduktionsfaktoren.png</em> und
+                <em>KapazitivReduktionsfaktoren.png</em> zeigen, dass der erreichbare Schaltabstand
+                stark vom Material abhängt (z.&nbsp;B. Stahl, Aluminium, Glas, Holz, Wasser).
+                Der Einbau (bündig / nicht bündig, siehe <em>KapazitivInduktivEinbau.png</em>)
+                beeinflusst zusätzlich die Größe und Form des Feldes und damit den maximalen Schaltabstand.
+            </p>
+            <!-- ENDE ERLÄUTERUNG -->
+
+            <div class="definition">
+                <strong>Bemessungsschaltabstand Sn:</strong><br>
+                Abstand, bei dem eine genormte Prüfplatte (z.&nbsp;B. aus S235-Stahl) sicher erkannt wird und der Sensor schaltet.
+            </div>
+
+            <div class="definition">
+                <strong>Gesicherter Schaltabstand Sa:</strong><br>
+                Bereich, in dem der Sensor das Objekt unter allen zulässigen Betriebsbedingungen <strong>sicher</strong> erkennt.  
+                Typisch: <code>Sa ≈ 0,8 · Sn</code> (Richtwert).
+            </div>
+
+            <div class="definition">
+                <strong>Tatsächlicher Schaltabstand Sr:</strong><br>
+                Real gemessener Schaltabstand in der Anwendung, abhängig von Montage, Objekt und Umgebung.
+            </div>
+
+            <div class="definition">
+                <strong>Hysterese H:</strong><br>
+                Unterschied des Schaltpunktes beim Annähern und beim Entfernen des Objektes.  
+                Verhindert „Flattern“ des Ausgangs bei kleinen Bewegungen.
+            </div>
+
+            <div class="definition">
+                <strong>Reduktionsfaktor:</strong><br>
+                Beschreibt, wie stark der Schaltabstand bei anderen Materialien gegenüber der Prüfplatte kleiner wird.
+                Beispiel: Für Aluminium ist der Schaltabstand oft deutlich kleiner als für Stahl.
+            </div>
+
+            <div class="quiz-block">
+                <strong>Selbstcheck</strong>
+                <details>
+                    <summary>Aufgabe: Ein Sensor hat Sn = 10&nbsp;mm. In der Maschine darf das Werkstück nie näher als 8&nbsp;mm herankommen. Reicht das?</summary>
+                    <p>
+                        Ja, typischerweise ist Sa ≈ 0,8 · Sn = 8&nbsp;mm. Das Werkstück wird also im zulässigen Bereich sicher erkannt.
+                        In der Praxis muss aber die konkrete Angabe im Datenblatt geprüft werden.
+                    </p>
+                </details>
+                <details>
+                    <summary>Frage: Welcher Sensor eignet sich besser zur Füllstandserfassung von Wasser in einem Kunststoffbehälter? Induktiv oder kapazitiv?</summary>
+                    <p>
+                        Ein <strong>kapazitiver</strong> Sensor, weil er auch nichtleitende Medien und Flüssigkeiten durch die Behälterwand erfassen kann.
+                    </p>
+                </details>
+            </div>
+        </section>
+
+        <!-- EINHEIT 3 -->
+        <section id="einheit3" class="tab-section">
+            <span class="badge">Einheit 3</span>
+            <h2>Optische Sensoren</h2>
+
+            <p>
+                Optische Sensoren arbeiten mit sichtbarem oder infrarotem Licht. Sie reagieren auf Unterbrechung oder
+                Reflexion eines Lichtstrahls.
+            </p>
+
+            <h3>Einweg-Lichtschranke</h3>
+            <p>
+                Sender und Empfänger sind <strong>getrennt</strong> aufgebaut.  
+                Der Empfänger „sieht“ den Lichtstrahl des Senders. Wird der Strahl unterbrochen (z.&nbsp;B. durch ein Werkstück),
+                schaltet der Sensor.
+            </p>
+            <ul>
+                <li>große Reichweiten möglich</li>
+                <li>sehr sicher gegen Störungen, da Empfänger direkt auf den Sender ausgerichtet ist</li>
+                <li>Verdrahtungsaufwand etwas höher (zwei Geräte)</li>
+            </ul>
+
+            <h3>Reflexions-Lichtschranke (Retro-Reflex)</h3>
+            <p>
+                Sender und Empfänger sitzen im <strong>gleichen Gehäuse</strong>. Gegenüber befindet sich ein Reflektor.
+                Der Sensor erkennt, ob das Licht vom Reflektor zurückkommt.
+            </p>
+            <ul>
+                <li>ein Gerät auf der einen Seite, Reflektor auf der anderen</li>
+                <li>Objekt unterbricht oder schwächt das reflektierte Licht</li>
+                <li>problematisch bei stark spiegelnden oder sehr dunklen Oberflächen</li>
+            </ul>
+
+            <h3>Reflexions-Lichttaster (Direktreflexion)</h3>
+            <p>
+                Auch hier sind Sender und Empfänger im gleichen Gehäuse. Es gibt jedoch <strong>keinen Reflektor</strong>.
+                Der Sensor wertet das vom Objekt zurückgestreute Licht aus.
+            </p>
+            <ul>
+                <li>Objekt selbst dient als „Reflektor“</li>
+                <li>Abhängig von Farbe und Oberfläche</li>
+                <li>gute Wahl für Anwesenheitskontrolle direkt vor dem Sensor</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Zusatz:</strong>  
+                Es gibt viele Sonderformen optischer Sensoren, z.&nbsp;B. Lichtgitter (mehrere Strahlen),
+                Laserdistanzsensoren (genaue Abstandsmessung) oder Lichtleiter-Lösungen für enge Einbausituationen.
+            </div>
+
+            <h3>Beispiele optischer Sensoren</h3>
+            <p>Die folgenden Abbildungen zeigen typische Anwendungen optischer Näherungssensoren:</p>
+            <div class="image-row">
+                <figure>
+                    <img src="EinwegLS.png" alt="Einweg-Lichtschranke">
+                    <figcaption>Einweg-Lichtschranke – Sender und Empfänger stehen sich gegenüber.</figcaption>
+                </figure>
+                <figure>
+                    <img src="ReflexionsLT.png" alt="Reflexions-Lichttaster">
+                    <figcaption>Reflexions-Lichttaster – das Objekt reflektiert den ausgesendeten Lichtstrahl.</figcaption>
+                </figure>
+                <figure>
+                    <img src="Lichtvorhang.png" alt="Lichtvorhang">
+                    <figcaption>Lichtvorhang – mehrere Strahlen sichern einen Gefahrenbereich ab.</figcaption>
+                </figure>
+            </div>
+
+            <div class="quiz-block">
+                <strong>Selbstcheck</strong>
+                <details>
+                    <summary>Frage: Wann würdest du eine Einweg-Lichtschranke statt eines Lichttasters einsetzen?</summary>
+                    <p>
+                        Wenn große Distanzen überbrückt werden sollen oder wenn eine sehr zuverlässige Erkennung
+                        unabhängig von der Objektoberfläche benötigt wird (z.&nbsp;B. an Förderstrecken).
+                    </p>
+                </details>
+                <details>
+                    <summary>Frage: Welche Probleme können bei stark spiegelnden Oberflächen auftreten?</summary>
+                    <p>
+                        Das Licht wird eventuell direkt in den Empfänger zurückgeworfen, obwohl eigentlich ein
+                        Unterbrechen erkannt werden soll. Dies kann zu Fehlschaltungen führen.
+                    </p>
+                </details>
+            </div>
+        </section>
+
+        <!-- EINHEIT 4 -->
+        <section id="einheit4" class="tab-section">
+            <span class="badge">Einheit 4</span>
+            <h2>Ultraschall- und RFID-Sensoren</h2>
+
+            <h3>Ultraschallsensoren</h3>
+            <p>
+                Ultraschallsensoren senden ein <strong>nicht hörbares Schall-Signal</strong> (typisch 65&nbsp;kHz bis 400&nbsp;kHz) aus.
+                Trifft dieses Signal auf ein Objekt, wird es reflektiert und vom Sensor wieder empfangen.
+            </p>
+            <p>
+                Aus der <strong>Laufzeit</strong> (Zeit zwischen Senden und Empfangen) berechnet der Sensor den Abstand zum Objekt.
+                Das Ausgangssignal kann als Schaltpunkt (binar) oder als analoges Spannung-/Stromsignal ausgeführt sein.
+            </p>
+            <ul>
+                <li>funktioniert für viele Materialien (fest, flüssig, Pulver)</li>
+                <li>geeignet für große Reichweiten und Füllstandsmessungen</li>
+                <li>relativ unempfindlich gegen Staub und leichte Verschmutzung</li>
+                <li>ungeeignet bei extremem Unter-/Überdruck oder sehr hohen Temperaturen</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Beispiel:</strong>
+                Füllstandsmessung in Mehl- oder Zementsilos, Erfassung von Fahrzeugen in Parkhäusern,
+                Abstandsmessung in Fördersystemen.
+            </div>
+
+            <h3>RFID-Sensoren (Identifikationssysteme)</h3>
+            <p>
+                RFID steht für <strong>Radio Frequency Identification</strong>.
+                Hier werden Transponder (Tags) mittels elektromagnetischer Wellen ausgelesen.
+            </p>
+            <ul>
+                <li>ein <strong>Lesegerät</strong> (Reader) erzeugt ein HF-Feld</li>
+                <li>ein <strong>Transponder</strong> (z.&nbsp;B. Karte, Etikett, Schlüsselanhänger) antwortet mit einer Kennung</li>
+                <li>Kontaktlose Identifikation ohne Sichtkontakt möglich (im Gegensatz zu Barcodes)</li>
+            </ul>
+
+            <p>
+                In der Automatisierungstechnik werden RFID-Systeme z.&nbsp;B. eingesetzt, um Werkstückträger zu identifizieren,
+                Produktionsdaten mitzuführen oder Zugangsberechtigungen zu prüfen.
+            </p>
+
+            <div class="quiz-block">
+                <strong>Selbstcheck</strong>
+                <details>
+                    <summary>Frage: Warum sind Ultraschallsensoren gut für Füllstandsmessungen geeignet?</summary>
+                    <p>
+                        Weil sie unabhängig von der Farbe und dem Material des Mediums arbeiten und auch über größere
+                        Distanzen messen können. Sie unterscheiden Nah- und Fernobjekte zuverlässig.
+                    </p>
+                </details>
+                <details>
+                    <summary>Frage: Nenne einen Vorteil von RFID gegenüber einem optischen Barcode.</summary>
+                    <p>
+                        RFID benötigt keine Sichtverbindung – der Transponder kann z.&nbsp;B. im Gehäuse oder unter einer Abdeckung liegen.
+                    </p>
+                </details>
+            </div>
+        </section>
+
+        <!-- EINHEIT 5 -->
+        <section id="einheit5" class="tab-section">
+            <span class="badge">Einheit 5</span>
+            <h2>Magnetische und magnetoresistive Sensoren</h2>
+
+            <h3>Reed-Kontakt (magnetischer Schalter)</h3>
+            <p>
+                Ein Reed-Kontakt besteht aus zwei ferromagnetischen Kontaktzungen in einem Glasröhrchen.
+                Nähert sich ein Dauermagnet oder eine bestromte Spule, ziehen sich die Zungen an und schließen den Kontakt.
+            </p>
+            <ul>
+                <li>mechanisches Schalten (Kontakt schließt/öffnet)</li>
+                <li>begrenzte Lebensdauer durch Kontaktverschleiß (typisch ca. 10<sup>7</sup> Schaltspiele)</li>
+                <li>häufig in Zylindern, Sicherheitseinrichtungen, Türkontakten</li>
+            </ul>
+
+            <div class="image-row">
+                <figure>
+                    <img src="Reed.png" alt="Reed-Kontakt mit Magnetfeldlinien">
+                    <figcaption>Reed-Kontakt im Magnetfeld – die Kontaktzungen schließen bei Anwesenheit des Magneten.</figcaption>
+                </figure>
+            </div>
+
+            <h3>Magnetoresistive Sensoren</h3>
+            <p>
+                Magnetoresistive Sensoren nutzen die Eigenschaft bestimmter Materialien,
+                ihren elektrischen Widerstand bei einem <strong>magnetischen Feld</strong> zu ändern.
+                Die Widerstandsänderung wird elektronisch ausgewertet und in ein Schaltsignal umgesetzt.
+            </p>
+            <ul>
+                <li>keine mechanischen Kontakte &rarr; <strong>verschleißfrei</strong></li>
+                <li>sehr hohe Lebensdauer (ca. 10<sup>10</sup> Schaltspiele)</li>
+                <li>baugleich einsetzbar wie Reed-Kontakte, aber zuverlässiger und schneller</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Vergleich Reed vs. magnetoresistiv:</strong>
+                <ul>
+                    <li>Reed: mechanisch, günstiger, aber begrenzte Schaltspielzahl</li>
+                    <li>Magnetoresistiv: elektronisch, höhere Lebensdauer, gute Wiederholgenauigkeit</li>
+                </ul>
+            </div>
+
+            <h3>Weitere magnetische Sensoren (Kurzüberblick)</h3>
+            <p>
+                Neben Reed- und magnetoresistiven Schaltern gibt es z.&nbsp;B. <strong>Hall-Sensoren</strong>,
+                die das Hall-Effekt-Prinzip nutzen. Auch sie reagieren auf Magnetfelder und liefern analoge oder digitale Signale.
+            </p>
+
+            <div class="quiz-block">
+                <strong>Selbstcheck</strong>
+                <details>
+                    <summary>Frage: Warum werden in modernen Anlagen oft magnetoresistive Sensoren statt Reed-Kontakten verwendet?</summary>
+                    <p>
+                        Wegen der verschleißfreien Arbeitsweise, der hohen Lebensdauer und der stabilen Schaltpunkte,
+                        insbesondere bei hohen Schaltfrequenzen.
+                    </p>
+                </details>
+                <details>
+                    <summary>Frage: Wodurch wird der Reed-Kontakt ausgelöst?</summary>
+                    <p>
+                        Durch ein externes Magnetfeld, z.&nbsp;B. einen Dauermagneten am bewegten Teil oder eine Spule.
+                    </p>
+                </details>
+            </div>
+        </section>
+
+        <!-- OPTIONALER ABSCHLUSS -->
+        <section id="abschluss" class="tab-section">
+            <span class="badge">Abschluss</span>
+            <h2>Zusammenfassung &amp; Transfer</h2>
+            <p>
+                Du kennst jetzt die wichtigsten Sensorarten für die Betriebstechnik:
+                induktiv, kapazitiv, optisch, Ultraschall, RFID sowie magnetische und magnetoresistive Sensoren.
+                Außerdem weißt du, wie 2- und 3-Draht-Anschlüsse sowie NPN/PNP-Ausgänge in Steuerungen eingesetzt werden.
+            </p>
+            <p>
+                Überlege dir zu deiner eigenen Anlage oder einem Praxisbeispiel:
+            </p>
+            <ul>
+                <li>Welcher Sensortyp wäre dort sinnvoll?</li>
+                <li>Wie müsste er angeschlossen werden (2-/3-Draht, NPN/PNP)?</li>
+                <li>Spielen Schaltabstand, Hysterese oder Reduktionsfaktoren eine Rolle?</li>
+            </ul>
+
+            <h3>Material zum Download</h3>
+            <p>Die komplette Sensoren-Unterlage kannst du hier herunterladen:</p>
+            <ul>
+                <li><a href="Sensoren V1_0.pdf" target="_blank" download>Sensoren V1_0.pdf</a></li>
+            </ul>
+
+            <details>
+                <summary>Impulse für eine kurze Gruppenaufgabe</summary>
+                <p>
+                    Bildet kleine Gruppen und entwerft eine einfache Anlage (z.&nbsp;B. Förderband mit Füllstandskontrolle).
+                    Zeichnet ein Sensorschema mit 3–5 Sensoren und begründet die Wahl jedes Sensors.
+                </p>
+            </details>
+        </section>
+
+    </div>
+</main>
+
+<footer>
+    Lernmodul Sensortechnik · Einsetzbar für 2. Lehrjahr Elektroniker für Betriebstechnik
+</footer>
+
+<script>
+    // Tabs aktivieren
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabs = document.querySelectorAll(".tab-link");
+        const sections = document.querySelectorAll(".tab-section");
+
+        function showTab(id) {
+            sections.forEach(sec => {
+                sec.style.display = (sec.id === id) ? "block" : "none";
+            });
+            tabs.forEach(tab => {
+                tab.classList.toggle("active", tab.dataset.target === id);
+            });
+        }
+
+        tabs.forEach(tab => {
+            tab.addEventListener("click", function (e) {
+                e.preventDefault();
+                showTab(this.dataset.target);
+            });
+        });
+
+        // Standard: erste Registerkarte anzeigen
+        if (tabs.length > 0) {
+            showTab(tabs[0].dataset.target);
+        }
+    });
+</script>
+</body>
+</html>
